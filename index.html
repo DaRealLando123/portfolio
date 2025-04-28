@@ -1,1 +1,27 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Circuit Board Scroll</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Fixed SVG Background -->
+  <svg id="circuitBoard"></svg>
+
+  <!-- Scrollable Content -->
+  <div id="content">
+    <section class="panel">
+      <h1>Hi there 👋 I'm Lando</h1>
+      <div class="content">
+        <button>Apps</button> <button>Projects</button> <button>About</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
