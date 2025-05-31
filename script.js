@@ -1,107 +1,114 @@
-gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let width, height, dpr, gridPoints = [];
 
-const svg = document.getElementById('circuitBoard');
-const width = window.innerWidth;
-const height = window.innerHeight;
-
-svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-
-const NUM_PATHS = 40;
-const circuitPaths = [];
-
-for (let i = 0; i < NUM_PATHS; i++) {
-  const isVertical = Math.random() > 0.5;
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-
-  if (isVertical) {
-    const x = Math.random() * width;
-    const controlOffset = (Math.random() - 0.5) * 200;
-    path.setAttribute("d", `M${x},0 Q${x + controlOffset},${height / 2} ${x},${height}`);
-  } else {
-    const y = Math.random() * height;
-    const controlOffset = (Math.random() - 0.5) * 200;
-    path.setAttribute("d", `M0,${y} Q${width / 2},${y + controlOffset} ${width},${y}`);
-  }
-
-  path.setAttribute("class", "circuit");
-  svg.appendChild(path);
-  circuitPaths.push(path);
-
-  // Pulse animation
-  const pulse = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  pulse.setAttribute("class", "pulse");
-  svg.appendChild(pulse);
-
-  gsap.to(pulse, {
-    motionPath: {
-      path: path,
-      align: path,
-      autoRotate: false,
-      alignOrigin: [0.5, 0.5]
-    },
-    duration: 5 + Math.random() * 3,
-    repeat: -1,
-    ease: "none",
-    delay: Math.random() * 2
-  });
+function resize() {
+  dpr = window.devicePixelRatio || 1;
+  width = window.innerWidth * 1.5;
+  height = window.innerHeight * 1.5;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+  createGrid();
 }
 
-// Scroll-triggered content animations
-gsap.utils.toArray(".panel").forEach(panel => {
-  gsap.to(panel, {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    ease: "power2.out",
-    scrollTrigger: {
-      trigger: panel,
-      start: "top 80%",
-      toggleActions: "play none none reverse"
+function createGrid() {
+  gridPoints = [];
+  const cols = 15;
+  const rows = 15;
+  const spacingX = width / cols;
+  const spacingY = height / rows;
+
+  for (let y = 0; y <= rows; y++) {
+    for (let x = 0; x <= cols; x++) {
+      gridPoints.push({
+        x: x * spacingX,
+        y: y * spacingY,
+        offsetX: Math.random() * 50 - 25,
+        offsetY: Math.random() * 50 - 25,
+        angle: Math.random() * Math.PI * 2
+      });
     }
-  });
+  }
+}
+
+let mouse = { x: width / 2, y: height / 2 };
+
+window.addEventListener('mousemove', e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
 });
 
-// Optional: click to add a new pulse
-svg.addEventListener("click", () => {
-  const randomPath = circuitPaths[Math.floor(Math.random() * circuitPaths.length)];
-  const pulse = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  pulse.setAttribute("class", "pulse");
-  svg.appendChild(pulse);
+function draw() {
+  ctx.clearRect(0, 0, width, height);
+  ctx.strokeStyle = '#00f0ff33';
+  ctx.lineWidth = 1;
 
-  gsap.to(pulse, {
-    motionPath: {
-      path: randomPath,
-      align: randomPath,
-      autoRotate: false,
-      alignOrigin: [0.5, 0.5]
-    },
-    duration: 2,
-    ease: "power1.inOut",
-    onComplete: () => svg.removeChild(pulse)
-  });
+  const time = Date.now() * 0.001;
+
+  for (let i = 0; i < gridPoints.length; i++) {
+    const p = gridPoints[i];
+    const nx = p.x + Math.sin(time + p.angle) * p.offsetX;
+    const ny = p.y + Math.cos(time + p.angle) * p.offsetY;
+    p._nx = nx;
+    p._ny = ny;
+
+    ctx.beginPath();
+    ctx.arc(nx, ny, 2, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+  }
+
+  const cols = 16;
+  for (let y = 0; y < 15; y++) {
+    for (let x = 0; x < 15; x++) {
+      const i = y * cols + x;
+      const a = gridPoints[i];
+      const b = gridPoints[i + 1];
+      const c = gridPoints[i + cols];
+      if (b && a) {
+        ctx.beginPath();
+        ctx.moveTo(a._nx, a._ny);
+        ctx.lineTo(b._nx, b._ny);
+        ctx.stroke();
+      }
+      if (c && a) {
+        ctx.beginPath();
+        ctx.moveTo(a._nx, a._ny);
+        ctx.lineTo(c._nx, c._ny);
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(draw);
+}
+
+// Parallax Effect
+let targetX = 0, targetY = 0;
+let currentX = 0, currentY = 0;
+
+document.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth) - 0.5;
+  const y = (e.clientY / window.innerHeight) - 0.5;
+  targetX = x * 30;
+  targetY = y * 30;
 });
 
-// Select the panel element and the background (SVG)
-const panel = document.querySelector(".panel");
-const circuitBoard = document.querySelector("#circuitBoard");
+function updateParallax() {
+  currentX += (targetX - currentX) * 0.05;
+  currentY += (targetY - currentY) * 0.05;
 
-// Event listener to track mouse movement
-document.addEventListener("mousemove", (event) => {
-    const mouseX = event.clientX; // Get mouse X position
-    const mouseY = event.clientY; // Get mouse Y position
+  canvas.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+  document.querySelector('.content').style.transform = `translate3d(${currentX * 0.4}px, ${currentY * 0.4}px, 0)`;
 
-    // Calculate offsets (percentage of the mouse position in relation to the window size)
-    const offsetX = (mouseX / window.innerWidth) - 0.5; // Normalize X to range from -0.5 to 0.5
-    const offsetY = (mouseY / window.innerHeight) - 0.5; // Normalize Y to range from -0.5 to 0.5
+  requestAnimationFrame(updateParallax);
+}
 
-    // Apply slight movement to the panel based on mouse position
-    // Multiply by a factor to adjust the strength of the movement
-    const textStrength = 20; // Movement strength for the text
-    const backgroundStrength = 5; // Movement strength for the background (less movement)
-
-    // Move the panel (text)
-    panel.style.transform = `translate(${offsetX * textStrength}px, ${offsetY * textStrength}px)`;
-
-    // Move the background (SVG)
-    circuitBoard.style.transform = `translate(${offsetX * backgroundStrength}px, ${offsetY * backgroundStrength}px)`;
-});
+resize();
+draw();
+updateParallax();
+window.addEventListener('resize', resize);
