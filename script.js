@@ -1,4 +1,4 @@
-const canvas = document.getElementById('bg');
+﻿const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
 let width, height, dpr, gridPoints = [];
 
@@ -123,10 +123,44 @@ document.querySelectorAll('.buttons a[href="#info"]').forEach(link => {
         const infoBox = document.getElementById('info-content');
 
         // Swap content based on clicked button
-        if (section === 'apps') {
-            infoBox.innerHTML = '<h1>Apps</h1><p class="infobox">Details about apps go here.</p>';
+        if (section === 'skills') {
+            infoBox.innerHTML = `
+<div style="display: flex; gap: 40px; flex-wrap: nowrap; overflow: hidden; justify-content: center;">
+  <div style="flex: 0 0 auto; width: 30%;">
+    <a href="https://www.credly.com/earner/earned/badge/43fcc8bf-c51a-48ef-ab8e-803a61a02907"><img src="it-specialist-html-and-css.png" style="max-width: 100%;"></a>
+    <h2>Web Development</h2>
+    <h4>Certified 🗸</h4>
+    <div class="infobox">
+      <p>Specialist in front-end technologies including HTML, CSS, and JavaScript.</p>
+    </div>
+  </div>
+
+  <div style="flex: 0 0 auto; width: 30%;">
+  <a href="https://www.credly.com/badges/b7419fc7-3a49-4a30-bec6-c7495381b137/public_url"><img src="office.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/earner/earned/badge/02a5f8e9-e5c3-4974-b6f3-1cd740dc6129"><img src="excel.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/earner/earned/badge/506866b0-14e4-40ca-a81a-d4833ffae6d6"><img src="word.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/earner/earned/badge/011fedc9-ec3c-4dd8-84ba-542032196db8"><img src="powerpoint.png" style="max-width: 100%;"></a>
+    <h2>Office Apps</h2>
+    <h4>Certified 🗸</h4>
+    <div class="infobox">
+      <p>Specialist and associate in a multitude of Microsoft apps; quick and efficient typist.</p>
+    </div>
+  </div>
+
+  <div style="flex: 0 0 auto; width: 30%;">
+    <a href="https://www.credly.com/earner/earned/badge/db60b1eb-9644-41cb-99b7-48b699b004ac"><img src="adobe.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/earner/earned/badge/ce72ba0c-a2ef-45b8-bd77-4e45657de6b0"><img src="photoshop.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/earner/earned/badge/40f2088b-193d-4519-8717-548b5145f9eb"><img src="illustrator.png" style="max-width: 100%;"></a>
+    <h2>Digital Design</h2>
+    <h4>Certified 🗸</h4>
+    <div class="infobox">
+      <p>Professional in design principles, creating modern, clean illustrations and edits using Adobe Illustrator and Photoshop.</p>
+    </div>
+  </div>
+</div>
+`;
         } else if (section === 'projects') {
-            infoBox.innerHTML = '<h1>Projects</h1><p class="infobox">Details about projects go here.</p>';
+            infoBox.innerHTML = '<h1>Projects</h1><p class="infobox">Some of my projects are listed here.</p>';
         } else if (section === 'about') {
             infoBox.innerHTML = `<h1>About Me</h1><h2 class="infobox">Passion programmer and designer.</h2>`;
         }
@@ -139,9 +173,12 @@ document.querySelectorAll('.buttons a[href="#info"]').forEach(link => {
     link.addEventListener('click', () => {
         canvas.classList.add('zoom-out');
 
+        var newBg = link.getAttribute('data-section');
+        bgImage.style.backgroundImage = `url(${newBg+".png"})`;
+
         // Delay the image fade-in (e.g., 500ms)
         setTimeout(() => {
-            bgImage.style.opacity = '1';
+            bgImage.style.opacity = '.5';
         }, 500); // Adjust time to sync with your zoom animation
     });
 });
