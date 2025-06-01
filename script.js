@@ -127,7 +127,7 @@ document.querySelectorAll('.buttons a[href="#info"]').forEach(link => {
             infoBox.innerHTML = `
 <div style="display: flex; gap: 40px; flex-wrap: nowrap; overflow: hidden; justify-content: center;">
   <div style="flex: 0 0 auto; width: 30%;">
-    <a href="https://www.credly.com/earner/earned/badge/43fcc8bf-c51a-48ef-ab8e-803a61a02907"><img src="it-specialist-html-and-css.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/badges/43fcc8bf-c51a-48ef-ab8e-803a61a02907/public_url"><img src="it-specialist-html-and-css.png" style="max-width: 100%;"></a>
     <h2>Web Development</h2>
     <h4>Certified 🗸</h4>
     <div class="infobox">
@@ -137,9 +137,9 @@ document.querySelectorAll('.buttons a[href="#info"]').forEach(link => {
 
   <div style="flex: 0 0 auto; width: 30%;">
   <a href="https://www.credly.com/badges/b7419fc7-3a49-4a30-bec6-c7495381b137/public_url"><img src="office.png" style="max-width: 100%;"></a>
-    <a href="https://www.credly.com/earner/earned/badge/02a5f8e9-e5c3-4974-b6f3-1cd740dc6129"><img src="excel.png" style="max-width: 100%;"></a>
-    <a href="https://www.credly.com/earner/earned/badge/506866b0-14e4-40ca-a81a-d4833ffae6d6"><img src="word.png" style="max-width: 100%;"></a>
-    <a href="https://www.credly.com/earner/earned/badge/011fedc9-ec3c-4dd8-84ba-542032196db8"><img src="powerpoint.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/badges/02a5f8e9-e5c3-4974-b6f3-1cd740dc6129/public_url"><img src="excel.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/badges/506866b0-14e4-40ca-a81a-d4833ffae6d6/public_url"><img src="word.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/badges/011fedc9-ec3c-4dd8-84ba-542032196db8/public_url"><img src="powerpoint.png" style="max-width: 100%;"></a>
     <h2>Office Apps</h2>
     <h4>Certified 🗸</h4>
     <div class="infobox">
@@ -148,9 +148,9 @@ document.querySelectorAll('.buttons a[href="#info"]').forEach(link => {
   </div>
 
   <div style="flex: 0 0 auto; width: 30%;">
-    <a href="https://www.credly.com/earner/earned/badge/db60b1eb-9644-41cb-99b7-48b699b004ac"><img src="adobe.png" style="max-width: 100%;"></a>
-    <a href="https://www.credly.com/earner/earned/badge/ce72ba0c-a2ef-45b8-bd77-4e45657de6b0"><img src="photoshop.png" style="max-width: 100%;"></a>
-    <a href="https://www.credly.com/earner/earned/badge/40f2088b-193d-4519-8717-548b5145f9eb"><img src="illustrator.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/badges/db60b1eb-9644-41cb-99b7-48b699b004ac/public_url"><img src="adobe.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/badges/ce72ba0c-a2ef-45b8-bd77-4e45657de6b0/public_url"><img src="photoshop.png" style="max-width: 100%;"></a>
+    <a href="https://www.credly.com/badges/40f2088b-193d-4519-8717-548b5145f9eb/public_url"><img src="illustrator.png" style="max-width: 100%;"></a>
     <h2>Digital Design</h2>
     <h4>Certified 🗸</h4>
     <div class="infobox">
